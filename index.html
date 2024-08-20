@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salvium Supply Dashboard</title>
+    <style>
+        @font-face {
+            font-family: 'Aptos';
+            src: url('Microsoft Aptos Fonts/Aptos-Bold.ttf') format('truetype'); /* Bold font for general text */
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Aptos-Light';
+            src: url('Microsoft Aptos Fonts/Aptos-Light.ttf') format('truetype'); /* Light font for category names */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Aptos-Black';
+            src: url('Microsoft Aptos Fonts/Aptos-Black.ttf') format('truetype'); /* Black font for values */
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Aptos', sans-serif; /* Use Aptos-Bold as the default font */
+            background-image: url('Salvium_GRADIENT.jpg'); /* Gradient background */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #181818;
+            font-size: 3rem; /* Larger, modern font size */
+            margin-bottom: 20px; /* Adjusted margin */
+            font-weight: 900;
+        }
+
+        /* Style for the small logos below headers */
+        .header-logo {
+            display: block;
+            margin: 10px auto;
+            width: 40px; /* Same size as the footer logo */
+            height: auto;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 700px; /* Increased width for better readability */
+            margin: 0 auto;
+        }
+
+        li {
+            background: linear-gradient(135deg, #2b2b2b, #3a3a3a); /* Modern gradient background */
+            border-radius: 12px; /* Softer corners */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Softer shadow for depth */
+            margin: 24px 0; /* Increased space between buttons by 20% (from 20px to 24px) */
+            padding: 20px;
+            font-size: 1.3rem; /* Slightly larger text */
+            display: flex;
+            justify-content: space-between; /* Ensure text and data stay on one line */
+            align-items: center;
+            color: #fff;
+            transition: border-color 0.3s ease; /* Smooth hover effect for border */
+            border: 4px solid transparent; /* Set border width initially */
+        }
+
+        li span {
+            font-family: 'Aptos-Black', sans-serif; /* Use Aptos-Black for the values */
+            font-weight: 900;
+            color: #00D9CC; /* Modern color for the values */
+        }
+
+        li:hover {
+            border-color: #9EE700; /* Change border color on hover but no background fading */
+        }
+
+        /* Calculator Styling */
+        .calculator {
+            margin: 40px auto;
+            max-width: 700px;
+            background-color: #181818;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            padding-right: 40px; /* Added buffer on the right side */
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .calculator label {
+            font-family: 'Aptos-Light', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: block;
+            text-align: left; /* Flush left */
+        }
+
+        .calculator input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            text-align: right;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .calculator button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            background-color: #00D9CC; /* Aqua color for button */
+            color: #000; /* Black text for the button */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .calculator button:hover {
+            background-color: #00b5a3; /* Darker hover color */
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: center;
+            color: #000; /* Black color for the text */
+            font-size: 1rem; /* Larger font size for the footer */
+            margin-top: 40px;
+        }
+
+        .footer-logo {
+            display: block;
+            margin: 10px auto;
+            width: 40px; /* Smaller logo size */
+            height: auto;
+        }
+
+        .footer-text {
+            color: #000; /* Black color for the text */
+        }
+
+        .footer-text a {
+            color: #000; /* Black color for the link */
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Salvium Supply Dashboard</h2>
+<img src="Salvium_ICON-BLK.png" alt="Salvium Logo" class="header-logo"> <!-- Centered logo below top header -->
+<ul>
+    <li>Total SAL circulating: <span id="sal"></span></li>
+    <li>Total SAL staked: <span id="stake"></span></li>
+    <li>Total SAL burned: <span id="burn"></span></li>
+    <li>SAL block reward: <span>119</span></li> <!-- New button -->
+    <li>Total SAL Yield (30 days): <span id="yield">652,771</span></li>
+    <li>Yield per SAL staked (each block): <span id="yieldPerStaked">0.00000661</span></li>
+</ul>
+
+<!-- Header for the First Calculator -->
+<h2>Salvium Staking Calculator (Block)</h2>
+<img src="Salvium_ICON-BLK.png" alt="Salvium Logo" class="header-logo"> <!-- Centered logo below header -->
+<div class="calculator">
+    <label for="blockStaked">Block Staked</label>
+    <input type="text" id="blockStaked" placeholder="Enter block at which you staked" oninput="formatInput(this)">
+
+    <label for="currentBlock">Current Block</label>
+    <input type="text" id="currentBlock" placeholder="Enter current block number" oninput="formatInput(this)">
+
+    <label for="amountStaked">Amount Staked</label>
+    <input type="text" id="amountStaked" placeholder="Enter amount of SAL staked" oninput="formatInput(this)">
+
+    <label for="estimatedYield">Estimated Yield</label>
+    <input type="text" id="estimatedYield" disabled placeholder="Estimated yield will be calculated">
+
+    <button onclick="calculateYield()">Calculate Estimated Yield</button>
+</div>
+
+<!-- Header for the Second Calculator -->
+<h2>Salvium Staking Calculator (Date)</h2>
+<img src="Salvium_ICON-BLK.png" alt="Salvium Logo" class="header-logo"> <!-- Centered logo below header -->
+<div class="calculator">
+    <label for="dateStaked">Date Staked</label>
+    <input type="date" id="dateStaked" placeholder="Enter date staked">
+
+    <label for="currentDate">Current Date</label>
+    <input type="date" id="currentDate" value=""> <!-- Editable and auto-fills today's date -->
+
+    <label for="amountStaked2">Amount Staked</label>
+    <input type="text" id="amountStaked2" placeholder="Enter amount of SAL staked" oninput="formatInput(this)">
+
+    <label for="estimatedYield2">Estimated Yield</label>
+    <input type="text" id="estimatedYield2" disabled placeholder="Estimated yield will be calculated">
+
+    <button onclick="calculateYieldByDate()">Calculate Estimated Yield</button>
+</div>
+
+<script>
+    // Function to format numbers with thousand separators and remove extra decimals
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Function to format input fields as users type
+    function formatInput(input) {
+        let value = input.value.replace(/,/g, ""); // Remove any existing commas
+        if (!isNaN(value) && value !== "") {
+            input.value = formatNumber(value); // Add thousand separators
+        }
+    }
+
+    function calculateYield() {
+        const blockStaked = parseInt(document.getElementById('blockStaked').value.replace(/,/g, ""));
+        const currentBlock = parseInt(document.getElementById('currentBlock').value.replace(/,/g, ""));
+        const amountStaked = parseFloat(document.getElementById('amountStaked').value.replace(/,/g, ""));
+        const yieldPerBlock = 0.00000661; // Yield per SAL staked for each block
+
+        if (!isNaN(blockStaked) && !isNaN(currentBlock) && !isNaN(amountStaked)) {
+            const blocksPassed = currentBlock - blockStaked;
+            const estimatedYield = (blocksPassed * yieldPerBlock * amountStaked).toFixed(2);
+            document.getElementById('estimatedYield').value = formatNumber(estimatedYield) + " SAL";
+        } else {
+            document.getElementById('estimatedYield').value = 'Invalid input';
+        }
+    }
+
+    function calculateYieldByDate() {
+        const dateStaked = new Date(document.getElementById('dateStaked').value);
+        const currentDate = new Date(document.getElementById('currentDate').value);
+        const amountStaked = parseFloat(document.getElementById('amountStaked2').value.replace(/,/g, ""));
+        const yieldPerBlock = 0.00000661; // Yield per SAL staked for each block
+
+        if (!isNaN(dateStaked) && !isNaN(currentDate) && !isNaN(amountStaked)) {
+            const daysPassed = Math.floor((currentDate - dateStaked) / (1000 * 60 * 60 * 24)); // Difference in days
+            const estimatedYield = (daysPassed * 720 * yieldPerBlock * amountStaked).toFixed(2); // Apply the formula
+            document.getElementById('estimatedYield2').value = formatNumber(estimatedYield) + " SAL";
+        } else {
+            document.getElementById('estimatedYield2').value = 'Invalid input';
+        }
+    }
+
+    // Auto-fill current date for second calculator
+    document.getElementById('currentDate').valueAsDate = new Date();
+
+    // Fetch data from the API
+    fetch('https://explorer.salvium.io/api/supply')
+        .then(response => response.json())
+        .then(data => {
+            const supplyData = data.data;
+            const totalSalCirculating = Math.round((supplyData.SAL + supplyData.STAKE) / 100000000); // Divide by 100,000,000 and round
+            const totalSalStaked = Math.round(supplyData.STAKE / 100000000); // Divide by 100,000,000 and round
+            const totalSalBurned = Math.round(supplyData.BURN / 100000000); // Divide by 100,000,000 and round
+
+            document.getElementById('sal').textContent = formatNumber(totalSalCirculating);
+            document.getElementById('stake').textContent = formatNumber(totalSalStaked);
+            document.getElementById('burn').textContent = formatNumber(totalSalBurned);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+<!-- Footer with logo and link -->
+<div class="footer">
+    <img src="Salvium_ICON-BLK.png" alt="Salvium Logo" class="footer-logo">
+    <div class="footer-text">
+        To learn more, visit <a href="https://salvium.io/" target="_blank">salvium.io</a>
+    </div>
+</div>
+
+</body>
+</html>
